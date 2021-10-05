@@ -3,12 +3,12 @@ import time
 prijsBakje = 0.75
 prijsHoorntje = 1.25
 prijsBolletjes = 1.10
-
+aantalLiter =0
 def stap3(hoorntjeOfBakje, AantalBolletjes):
     print('hier is uw ' + hoorntjeOfBakje + ' met ' + str(AantalBolletjes) + ' Bolletjes')
 def snapIkNiet():
     print('sorry, dat snap ik niet')
-def smaken(AantalBolletjes):
+def smaken(AantalBolletjes, aantalLiter):
     e = True
     A = 1
     i = 0
@@ -117,7 +117,11 @@ def bolletjesBestellen():
                 bonnetje(prijsToppings, totaalAantalBolletjes, totaalAantalHoorntjes, totaalAantalBakjes)
             else:snapIkNiet()
 def literBestellen():
-    print()
+    aantalLiter = int(input('hoeveel liter ijs wilt u bestellen? '))
+    if aantalLiter >= 0:
+        smaken()
+    return
+
 
 print()
 print('Welkom bij Papi Gelato!')
