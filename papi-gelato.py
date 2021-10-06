@@ -3,25 +3,40 @@ import time
 prijsBakje = 0.75
 prijsHoorntje = 1.25
 prijsBolletjes = 1.10
-aantalLiter =0
-def stap3(hoorntjeOfBakje, AantalBolletjes):
+prijsLiter = 9.80
+def ijsGeven(hoorntjeOfBakje, AantalBolletjes):
     print('hier is uw ' + hoorntjeOfBakje + ' met ' + str(AantalBolletjes) + ' Bolletjes')
 def snapIkNiet():
     print('sorry, dat snap ik niet')
 def smaken(AantalBolletjes, aantalLiter):
-    e = True
-    A = 1
-    i = 0
-    while e == True:
-        i +=1
-        smaak = input('welke smaak wilt u voor bolletje ' + str(A) + ', wil je? A) Aardbei, C) Chocola, V) Vanille of M) Munt? ').upper()
-        A +=1
-        if i == AantalBolletjes:
-            e = False
-        if smaak != 'A' and smaak != 'C' and smaak != 'V' and smaak != 'M':
-            i -= 1
-            A -= 1
-            snapIkNiet()
+    if AantalBolletjes > 0:
+        e = True
+        A = 1
+        i = 0
+        while e == True:
+            i +=1
+            smaak = input('welke smaak wilt u voor bolletje ' + str(A) + ', wil je? A) Aardbei, C) Chocola, V) Vanille of M) Munt? ').upper()
+            A +=1
+            if smaak != 'A' and smaak != 'C' and smaak != 'V' and smaak != 'M':
+                i -= 1
+                A -= 1
+                snapIkNiet()
+            if i == AantalBolletjes:
+                e = False           
+    elif aantalLiter > 0:
+        p = True
+        v = 1
+        q = 0
+        while p == True:
+            q +=1
+            smaak = input('welke smaak wilt u voor liter ' + str(v) + ', wil je? A) Aardbei, C) Chocola, V) Vanille of M) Munt? ').upper()
+            v +=1
+            if q == aantalLiter:
+                p = False
+            if smaak != 'A' and smaak != 'C' and smaak != 'V' and smaak != 'M':
+                q -= 1
+                v -= 1
+                snapIkNiet()
 def toppings(PrijsToppings, hoorntjeOfBakje, AantalBolletjes):
     n = True
     while n == True:
@@ -45,26 +60,38 @@ def toppings(PrijsToppings, hoorntjeOfBakje, AantalBolletjes):
             snapIkNiet()
             n = True
     return PrijsToppings
-def bonnetje(PrijsToppings, totaalAantalBolletjes, totaalAantalHoorntjes, totaalAantalBakjes):
+def bonnetje(PrijsToppings, totaalAantalBolletjes, totaalAantalHoorntjes, totaalAantalBakjes, prijsLiter, aantalLiter):
     b = totaalAantalBolletjes*prijsBolletjes
     h = totaalAantalHoorntjes*prijsHoorntje
     B = totaalAantalBakjes*prijsBakje
-
+    l = prijsLiter*aantalLiter
     print() 
     print('[----------{Papi Gelato}----------]')
     print()
-    print(' bolletjes:   ' + str(totaalAantalBolletjes) + ' x ' + str(prijsBolletjes) + '       = €' + str(round(b, 3)))
+    if totaalAantalBolletjes > 0:
+        print(' bolletjes:   ' + str(totaalAantalBolletjes) + ' x ' + str(prijsBolletjes) + '       = €' + str(round(b, 3)))
     if totaalAantalHoorntjes > 0:
         print(' hoorntjes:   ' + str(totaalAantalHoorntjes) + ' x ' + str(prijsHoorntje) + '      = €' + str(round(h, 3)))
     if totaalAantalBakjes > 0:
         print(' bakjes:      ' + str(totaalAantalBakjes) + ' x ' + str(prijsBakje) + '      = €' + str(round(B, 3)))
-    print(' toppings:                  = €' + str(round(PrijsToppings, 3)))
-    print('                            ------- +')
-    print(' totaal:                    = €' + str(round(b+B+h+PrijsToppings, 3)))
+    if PrijsToppings > 0:
+        print(' toppings:                  = €' + str(round(PrijsToppings, 3)))
+    if aantalLiter > 0:
+        print(' liter:       ' + str(aantalLiter) + ' x ' + str(prijsLiter ) + '       = €' +str(round(l, 3)))
+    print('                            ------- +') 
+    print(' totaal:                    = €' + str(round(b+B+h+PrijsToppings+l, 3)))
+    if aantalLiter > 0:
+        print(' btw (9%):                  = €'  + str(round((l/100)*9, 2)))
     print()
     print('[---------------------------------]')
     print('bedankt voor jouw aankoop bij Papi Gelato!')
-def bolletjesBestellen():
+def literBestellen(AantalBolletjes, prijsLiter):
+    aantalLiter = int(input('hoeveel liter ijs wilt u bestellen? '))
+    if aantalLiter >= 0:
+        smaken(AantalBolletjes, aantalLiter)
+        bonnetje(prijsToppings, totaalAantalBolletjes, totaalAantalHoorntjes, totaalAantalBakjes, prijsLiter, aantalLiter)
+    return aantalLiter
+def bolletjesBestellen(aantalLiter, prijsLiter):
     x = True
     totaalAantalHoorntjes = 0
     totaalAantalBakjes = 0
@@ -76,7 +103,7 @@ def bolletjesBestellen():
         if AantalBolletjes <= 0:
             snapIkNiet()
         elif AantalBolletjes <= 3:
-            smaken(AantalBolletjes)
+            smaken(AantalBolletjes, aantalLiter)
             y = True
             while y == True:
                 time.sleep(1)
@@ -87,23 +114,23 @@ def bolletjesBestellen():
                     hoorntjeOfBakje = 'bakje'
                     time.sleep(1)
                     prijsToppings += toppings(prijsToppings, hoorntjeOfBakje, AantalBolletjes)
-                    stap3(hoorntjeOfBakje, AantalBolletjes)
+                    ijsGeven(hoorntjeOfBakje, AantalBolletjes)
                 elif hoorntjeOfBakje == '2':
                     y = False
                     totaalAantalHoorntjes +=1
                     hoorntjeOfBakje = 'hoorntje'
                     time.sleep(1)
                     prijsToppings += toppings(prijsToppings, hoorntjeOfBakje, AantalBolletjes)
-                    stap3(hoorntjeOfBakje, AantalBolletjes)
+                    ijsGeven(hoorntjeOfBakje, AantalBolletjes)
         elif AantalBolletjes <=8:
-            smaken(AantalBolletjes)
+            smaken(AantalBolletjes, aantalLiter)
             time.sleep(1)
             print('oke, je krijgt van mij een bakje met ' + str(AantalBolletjes) + ' bolletjes.')
             hoorntjeOfBakje = 'bakje'
             totaalAantalBakjes += 1
             time.sleep(1)
             prijsToppings += toppings(prijsToppings, hoorntjeOfBakje, AantalBolletjes)
-            stap3()
+            ijsGeven(hoorntjeOfBakje, AantalBolletjes)
         else:snapIkNiet()
         o = True
         while o == True:
@@ -114,26 +141,27 @@ def bolletjesBestellen():
             elif opnieuwBestellen == 'N':
                 x = False
                 o = False
-                bonnetje(prijsToppings, totaalAantalBolletjes, totaalAantalHoorntjes, totaalAantalBakjes)
+                bonnetje(prijsToppings, totaalAantalBolletjes, totaalAantalHoorntjes, totaalAantalBakjes, prijsLiter, aantalLiter)
             else:snapIkNiet()
-def literBestellen():
-    aantalLiter = int(input('hoeveel liter ijs wilt u bestellen? '))
-    if aantalLiter >= 0:
-        smaken()
-    return
+    return AantalBolletjes
 
 
 print()
 print('Welkom bij Papi Gelato!')
 z = True
 while z == True:
-    particulierOfZakelijk = input('Bent u 1) particulier of 2) zakelijk?')
+    totaalAantalHoorntjes = 0
+    totaalAantalBakjes = 0
+    totaalAantalBolletjes = 0  
+    prijsToppings = 0
+    AantalBolletjes = 0
+    aantalLiter = 0
+    particulierOfZakelijk = input('Bent u 1) particulier of 2) zakelijk? ')
     if particulierOfZakelijk == '1':
         z = False
-        bolletjesBestellen()
+        AantalBolletjes =bolletjesBestellen(aantalLiter,prijsLiter)
     elif particulierOfZakelijk == '2':
         z = False
-        literBestellen()
+        literBestellen(AantalBolletjes, prijsLiter)
     elif particulierOfZakelijk != '1' or particulierOfZakelijk != '2':
         snapIkNiet()
-	
