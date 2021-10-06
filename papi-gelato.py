@@ -2,12 +2,12 @@ import time
 
 prijsBakje = 0.75
 prijsHoorntje = 1.25
-prijsBolletjes = 1.10
+prijsBolletjes = 0.95
 prijsLiter = 9.80
 def ijsGeven(hoorntjeOfBakje, AantalBolletjes):
     print('hier is uw ' + hoorntjeOfBakje + ' met ' + str(AantalBolletjes) + ' Bolletjes')
 def snapIkNiet():
-    print('sorry, dat snap ik niet')
+    print('sorry, dat is geen optie die we aanbieden.')
 def smaken(AantalBolletjes, aantalLiter):
     if AantalBolletjes > 0:
         e = True
@@ -15,9 +15,9 @@ def smaken(AantalBolletjes, aantalLiter):
         i = 0
         while e == True:
             i +=1
-            smaak = input('welke smaak wilt u voor bolletje ' + str(A) + ', wil je? A) Aardbei, C) Chocola, V) Vanille of M) Munt? ').upper()
+            smaak = input('welke smaak wilt u voor bolletje ' + str(A) + ', wil je? A) Aardbei, C) Chocola of V) Vanille? ').upper()
             A +=1
-            if smaak != 'A' and smaak != 'C' and smaak != 'V' and smaak != 'M':
+            if smaak != 'A' and smaak != 'C' and smaak != 'V':
                 i -= 1
                 A -= 1
                 snapIkNiet()
@@ -29,11 +29,11 @@ def smaken(AantalBolletjes, aantalLiter):
         q = 0
         while p == True:
             q +=1
-            smaak = input('welke smaak wilt u voor liter ' + str(v) + ', wil je? A) Aardbei, C) Chocola, V) Vanille of M) Munt? ').upper()
+            smaak = input('welke smaak wilt u voor liter ' + str(v) + ', wil je? A) Aardbei, C) Chocola of V) Vanille? ').upper()
             v +=1
             if q == aantalLiter:
                 p = False
-            if smaak != 'A' and smaak != 'C' and smaak != 'V' and smaak != 'M':
+            if smaak != 'A' and smaak != 'C' and smaak != 'V':
                 q -= 1
                 v -= 1
                 snapIkNiet()
@@ -69,7 +69,7 @@ def bonnetje(PrijsToppings, totaalAantalBolletjes, totaalAantalHoorntjes, totaal
     print('[----------{Papi Gelato}----------]')
     print()
     if totaalAantalBolletjes > 0:
-        print(' bolletjes:   ' + str(totaalAantalBolletjes) + ' x ' + str(prijsBolletjes) + '       = €' + str(round(b, 3)))
+        print(' bolletjes:   ' + str(totaalAantalBolletjes) + ' x ' + str(prijsBolletjes) + '      = €' + str(round(b, 3)))
     if totaalAantalHoorntjes > 0:
         print(' hoorntjes:   ' + str(totaalAantalHoorntjes) + ' x ' + str(prijsHoorntje) + '      = €' + str(round(h, 3)))
     if totaalAantalBakjes > 0:
@@ -81,7 +81,7 @@ def bonnetje(PrijsToppings, totaalAantalBolletjes, totaalAantalHoorntjes, totaal
     print('                            ------- +') 
     print(' totaal:                    = €' + str(round(b+B+h+PrijsToppings+l, 3)))
     if aantalLiter > 0:
-        print(' btw (9%):                  = €'  + str(round((l/100)*9, 2)))
+        print(' btw (6%):                  = €'  + str(round((l/100)*6, 2)))
     print()
     print('[---------------------------------]')
     print('bedankt voor jouw aankoop bij Papi Gelato!')
